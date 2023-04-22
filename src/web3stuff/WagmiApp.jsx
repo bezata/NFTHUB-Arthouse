@@ -18,7 +18,6 @@ function WagmiApp() {
   return (
     <WagmiConfig client={wagmiClient}>
       <NFTHUBComponent />
-      <FetchData></FetchData>
     </WagmiConfig>
   );
 }

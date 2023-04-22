@@ -6,7 +6,7 @@ import {
 } from "wagmi";
 import nfthubABI from "./abi/NFTHUB.json"; // Import the ABI for your contract
 import { UploadFileToIPFS } from "./Dropzone";
-const NFTHUB_ADDRESS = "0xcb44fEEcC8cEc04393C92dC3CA6aD1148a2768C1"; // Replace with your deployed contract address
+const NFTHUB_ADDRESS = "0x49032164dB337312555bA6b562d2e8602fc57bD1"; // Replace with your deployed contract address
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");
