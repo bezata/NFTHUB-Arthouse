@@ -7,7 +7,7 @@ import {
 import nfthubABI from "./abi/NFTHUB.json";
 import { UploadFileToIPFS } from "./Dropzone";
 
-const NFTHUB_ADDRESS = "0x49032164dB337312555bA6b562d2e8602fc57bD1";
+const NFTHUB_ADDRESS = "0x0cb66b390d6b2BE9Cb33fBFd2243b15e7086ab81";
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");
@@ -16,7 +16,7 @@ function NFTHUBComponent() {
   const [listingPrice, setListingPrice] = useState(0);
   const [uploadError, setUploadError] = useState(false);
   const [isNFTCreated, setIsNFTCreated] = useState(false);
-
+  const [last, setLastItem] = useState(0);
   const { data } = useContractRead({
     address: NFTHUB_ADDRESS,
     abi: nfthubABI,
@@ -24,6 +24,15 @@ function NFTHUBComponent() {
     onSuccess(data) {
       let newListingPrice = data.toNumber();
       setListingPrice(newListingPrice);
+    },
+  });
+  const { data: lastItem } = useContractRead({
+    address: NFTHUB_ADDRESS,
+    abi: nfthubABI,
+    functionName: "getLastMintedTokenId",
+    onSuccess(lastItem) {
+      let last = lastItem.toNumber();
+      setLastItem(last);
     },
   });
 
@@ -127,7 +136,7 @@ function NFTHUBComponent() {
         )}
         <div className="flex items-center justify-between w-80 mb-4">
           <p className="text-gray-500">Listing Fee:</p>
-          <p className="font-bold ml-2">{listingPrice.toString()} wei</p>
+          <p className="font-bold ml-2">{listingPrice.toString()} GCELO</p>
         </div>
         <button
           className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"

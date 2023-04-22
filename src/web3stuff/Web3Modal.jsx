@@ -9,7 +9,7 @@ import { celoAlfajores, goerli, sepolia } from "wagmi/chains";
 import { Web3Button } from "@web3modal/react";
 import { useAccount } from "wagmi";
 
-const chains = [sepolia];
+const chains = [celoAlfajores];
 const projectId = "6e18bca83b6d8c08562669f22a83ca97";
 
 const { provider } = configureChains(chains, [w3mProvider({ projectId })]);
@@ -17,6 +17,10 @@ const wagmiClient = createClient({
   autoConnect: true,
   connectors: w3mConnectors({ projectId, version: 2, chains }),
   provider,
+  defaultChain: celoAlfajores,
+  tokenImages: {
+    CELO: "/abi/celogo.png",
+  },
 });
 const ethereumClient = new EthereumClient(wagmiClient, chains);
 
