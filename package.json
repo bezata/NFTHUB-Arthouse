@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/netlify": "^2.2.0",
     "@astrojs/react": "^2.1.1",
+    "@astrojs/tailwind": "^3.1.1",
     "@astrojs/vercel": "^3.2.4",
     "@metamask/detect-provider": "^2.0.0",
     "@nomicfoundation/hardhat-toolbox": "^2.0.2",
@@ -54,7 +55,7 @@
     "web3": "^1.9.0"
   },
   "devDependencies": {
-    "astro": "^2.1.9",
+    "astro": "^2.3.0",
     "hardhat": "^2.13.0",
     "sass": "^1.49.9",
     "tailwindcss": "^3.3.1"
