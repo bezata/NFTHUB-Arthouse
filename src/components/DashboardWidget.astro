@@ -1,48 +1,79 @@
 ---
-const { number = "", title = "", type = "" } = Astro.props;
+const { number = "", title = "", type = "", imageSrc = "" } = Astro.props;
 ---
 
 <div
-  class="dashboard-widget radius-large space-24 elevation-400 space-content type-${type}"
+  class={`dashboard-widget radius-large space-24 elevation-400 space-content type-${type}`}
 >
-  <p class="size-48">
-    <strong>{number}</strong>
-  </p>
-  <p class="size-20">
-    <em>{title}</em>
-  </p>
+  {
+    imageSrc && (
+      <div class="widget-image-container">
+        <img src={imageSrc} alt="" class="widget-image" />
+      </div>
+    )
+  }
+  <div class="widget-content">
+    <p class="size-48">
+      <strong>{number}</strong>
+    </p>
+    <p class="size-20">
+      <em>{title}</em>
+    </p>
+  </div>
 </div>
 
 <style lang="scss">
   .dashboard-widget {
+    position: relative;
+    background-color: var(--neutral-100);
+
+    .widget-image-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+      opacity: 0.5;
+    }
+
+    .widget-content {
+      position: relative;
+      z-index: 1;
+    }
+
     &.type-success {
-      > p:first-child {
+      > .widget-content > p:first-child {
         color: var(--success-700);
       }
     }
 
     &.type-error {
-      > p:first-child {
+      > .widget-content > p:first-child {
         color: var(--error-700);
       }
     }
-
-    background-color: var(--neutral-100);
   }
 
   :global(.darkmode .dashboard-widget) {
     background-color: var(--neutral-900);
 
     &.type-success {
-      > p:first-child {
+      > .widget-content > p:first-child {
         color: var(--success-400);
       }
     }
 
     &.type-error {
-      > p:first-child {
+      > .widget-content > p:first-child {
         color: var(--error-400);
       }
     }
+  }
+
+  .widget-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 </style>
