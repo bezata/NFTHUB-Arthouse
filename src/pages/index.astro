@@ -1,0 +1,53 @@
+---
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+import DashboardWidget from "../components/DashboardWidget.astro";
+import ModalWallet from "../web3stuff/Web3Modal";
+import { Card } from "accessible-astro-components";
+import { Modal } from "accessible-astro-components";
+---
+
+<DefaultLayout title="Arthouse">
+  <section>
+    <h1>Welcome NFTHUB 🧑‍🚀</h1><br />
+    <ModalWallet client:load />
+
+    <p class="size-20"></p>
+  </section>
+  <section class="margin-32">
+    <div class="space-content">
+      <div class="contents">
+        <h2>NFTs</h2>
+        <p id="current-time" class="size-12"></p>
+      </div>
+      <div class="grid small-grid-1 medium-grid-2 large-grid-3 equal-height">
+        <DashboardWidget />
+        <DashboardWidget number="+33" title="Products sold" />
+        <DashboardWidget number="" title="" type="" />
+        <ul>
+          <li>
+            <Card
+              img="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/300px-Star_Wars_Logo.svg.png"
+              title="First Nft"
+              footer="0xeEcC9967dc027168044DbC424227bEF70c6bf53E"
+            >
+              My Nft.
+            </Card>
+            <div class="radius-large space-96" style="border: 4px "></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      const date = new Date();
+      document.querySelector(
+        "#current-time"
+      ).innerHTML = `<em>${date.toDateString()}</em>`;
+    </script>
+  </section>
+  <style>
+    ul {
+      list-style-type: none;
+    }
+  </style>
+</DefaultLayout>

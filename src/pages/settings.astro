@@ -1,0 +1,16 @@
+---
+import ModalWallet from "../web3stuff/Web3Modal";
+import DefaultLayout from "../layouts/DefaultLayout.astro";
+---
+
+<DefaultLayout title="Wallet">
+  <section>
+    <h1>Wallet</h1><br />
+  </section>
+  <ModalWallet client:load />
+  <section class="margin-32">
+    <div class="space-content">
+      <div class="contents"></div>
+    </div>
+  </section>
+</DefaultLayout>

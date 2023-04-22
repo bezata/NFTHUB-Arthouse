@@ -1,0 +1,138 @@
+---
+import LoginLayout from "../layouts/LoginLayout.astro";
+import { Notification } from "accessible-astro-components";
+import { Icon } from "astro-icon";
+import ModalWallet from "../web3stuff/Web3Modal";
+---
+
+<LoginLayout title="Login">
+  <section class="bg-neutral-100">
+    <div class="login">
+      <div class="login__inner reveal h-screen">
+        <div class="inner__brand">
+          <div class="bg-neutral-900 radius-large space-8">
+            <img
+              class="brand__logo radius-large"
+              src="https://img.icons8.com/color/12x/mona-lisa.png"
+              alt=""
+            />
+          </div>
+          <div class="brand__text">
+            <span>NFTHUB Arthouse</span>
+            <span>Exhibit your NFT!</span>
+          </div>
+        </div>
+        <div class="inner__form space-content">
+          <Notification>
+            <Icon pack="majesticons" name="information-circle-line" /><p
+              class="size-14"
+            >
+              Log in using <strong>Connect Wallet</strong>.
+            </p>
+            <ModalWallet client:load />
+          </Notification>
+          <div class="space-content"></div>
+        </div>
+        <div class="login__footer text-neutral-700">
+          <p>
+            <em
+              >Check my github!<a href="https://github.com/bezata">bezata</a
+              ></em
+            >
+          </p>
+        </div>
+      </div>
+      <div class="login__background h-screen"></div>
+    </div>
+  </section>
+</LoginLayout>
+
+<style lang="scss">
+  @use "../assets/scss/base/breakpoint" as *;
+  @use "../assets/scss/base/size" as *;
+  @use "../assets/scss/base/space" as *;
+
+  .login {
+    display: grid;
+
+    @include breakpoint(medium) {
+      grid-template-columns: 550px 2fr;
+    }
+
+    .login__inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: $space-48;
+      padding: $space-24;
+      z-index: 1;
+
+      @include breakpoint(medium) {
+        padding: $space-48 $space-96;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.15);
+      }
+    }
+
+    .inner__brand {
+      display: flex;
+      align-items: center;
+      gap: $space-16;
+    }
+
+    .brand__logo {
+      max-width: 50px;
+    }
+
+    .brand__text {
+      display: flex;
+      flex-direction: column;
+      gap: $space-2;
+
+      > :first-child {
+        font-weight: bold;
+        @include size-20;
+      }
+
+      > :last-child {
+        @include size-14;
+      }
+    }
+
+    .login__background {
+      display: none;
+      background-color: #000;
+      background-image: url("/login-background.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      @include breakpoint(medium) {
+        display: block;
+      }
+    }
+
+    .reveal {
+      animation: reveal 0.3s ease-in;
+    }
+
+    .login__footer {
+      padding-bottom: $space-24;
+
+      @include breakpoint(medium) {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  @keyframes reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(-1rem);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
