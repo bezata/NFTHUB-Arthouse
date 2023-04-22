@@ -1,7 +1,6 @@
 import { w3mConnectors, w3mProvider } from "@web3modal/ethereum";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { celoAlfajores, goerli, sepolia } from "wagmi/chains";
-import NFTHUBComponent from "./NFTHUB";
+import { celoAlfajores, sepolia } from "wagmi/chains";
 import FetchData from "./FetchData";
 
 const chains = [sepolia];
@@ -14,13 +13,12 @@ const wagmiClient = createClient({
   provider,
 });
 
-function WagmiApp() {
+function FetchConfig() {
   return (
     <WagmiConfig client={wagmiClient}>
-      <NFTHUBComponent />
       <FetchData></FetchData>
     </WagmiConfig>
   );
 }
 
-export default WagmiApp;
+export default FetchConfig;

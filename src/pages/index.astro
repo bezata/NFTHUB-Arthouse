@@ -3,14 +3,13 @@ import DefaultLayout from "../layouts/DefaultLayout.astro";
 import DashboardWidget from "../components/DashboardWidget.astro";
 import ModalWallet from "../web3stuff/Web3Modal";
 import { Card } from "accessible-astro-components";
-import { Modal } from "accessible-astro-components";
+import FetchConfig from "../web3stuff/FetchConfig";
 ---
 
 <DefaultLayout title="Arthouse">
   <section>
     <h1>Welcome NFTHUB 🧑‍🚀</h1><br />
     <ModalWallet client:load />
-
     <p class="size-20"></p>
   </section>
   <section class="margin-32">
@@ -25,13 +24,8 @@ import { Modal } from "accessible-astro-components";
         <DashboardWidget number="" title="" type="" />
         <ul>
           <li>
-            <Card
-              img="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/300px-Star_Wars_Logo.svg.png"
-              title="First Nft"
-              footer="0xeEcC9967dc027168044DbC424227bEF70c6bf53E"
-            >
-              My Nft.
-            </Card>
+            <FetchConfig client:load />
+
             <div class="radius-large space-96" style="border: 4px "></div>
           </li>
         </ul>
