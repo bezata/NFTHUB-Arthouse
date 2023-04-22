@@ -1,9 +1,8 @@
-import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 // https://astro.build/config
 import { defineConfig } from "astro/config";
-import vercelEdge from "@astrojs/vercel/edge";
+import vercelServerless from "@astrojs/vercel/serverless";
 export default defineConfig({
   output: "server",
-  adapter: vercelEdge(),
+  adapter: vercelServerless(),
 });
