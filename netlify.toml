@@ -1,0 +1,3 @@
+[build]
+  command = "npm run build npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+  publish = "dist"
