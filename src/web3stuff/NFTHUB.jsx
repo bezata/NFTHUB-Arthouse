@@ -4,9 +4,10 @@ import {
   usePrepareContractWrite,
   useContractWrite,
 } from "wagmi";
-import nfthubABI from "./abi/NFTHUB.json"; // Import the ABI for your contract
+import nfthubABI from "./abi/NFTHUB.json";
 import { UploadFileToIPFS } from "./Dropzone";
-const NFTHUB_ADDRESS = "0x49032164dB337312555bA6b562d2e8602fc57bD1"; // Replace with your deployed contract address
+
+const NFTHUB_ADDRESS = "0x49032164dB337312555bA6b562d2e8602fc57bD1";
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ function NFTHUBComponent() {
   const [tokenURI, setTokenURI] = useState("");
   const [listingPrice, setListingPrice] = useState(0);
   const [uploadError, setUploadError] = useState(false);
+  const [isNFTCreated, setIsNFTCreated] = useState(false);
 
   const { data } = useContractRead({
     address: NFTHUB_ADDRESS,
@@ -30,7 +32,7 @@ function NFTHUBComponent() {
       const { success, pinataURL } = await UploadFileToIPFS(file);
       if (success) {
         setTokenURI(pinataURL);
-        setUploadError(false); // Reset the error state if file upload is successful
+        setUploadError(false);
       }
     } catch (error) {
       console.error(error);
@@ -44,7 +46,7 @@ function NFTHUBComponent() {
     if (file) {
       handleFileUpload(file);
     } else {
-      setUploadError(true); // Set the error state if no file is selected
+      setUploadError(true);
     }
   }
 
@@ -67,61 +69,96 @@ function NFTHUBComponent() {
 
   const handleListNFT = async () => {
     if (!tokenURI) {
-      setUploadError(true); // Set the error state if no file has been uploaded yet
+      setUploadError(true);
       return;
     }
     try {
       await listNFT?.();
+      setIsNFTCreated(true);
     } catch (error) {
-      // console.error(error);
+      console.error(error);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <head>
-        <link href="/dist/output.css" rel="stylesheet" />
-      </head>
-      <h2 className="text-3xl font-bold mb-8">List NFT</h2>
-      <div className="flex flex-col items-center">
-        <input
-          className="border border-gray-400 rounded-lg p-2 mb-4 w-80"
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          className="border border-gray-400 rounded-lg p-2 mb-4 w-80"
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <input
-          className="border border-gray-400 rounded-lg py-2 px-4 mb-4"
-          type="file"
-          id="file-upload"
-        />
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={handleButtonClick}
-        >
-          Upload File
-        </button>
+    <div className="min-h-screen bg-gradient-to-r from-purple-600 to-indigo-700 flex flex-col items-center justify-center">
+      <h2 className="text-5xl font-bold text-white mb-8">Create Your NFT</h2>
+      <div className="bg-white rounded-lg p-8 shadow-lg flex flex-col items-center">
+        <div className="relative mb-4 w-80">
+          <input
+            className="border-2 border-gray-400 rounded-lg p-2 w-full text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            type="text"
+            placeholder=" "
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label className="absolute top-0 left-2 px-1 text-gray-500 font-bold text-xs transform origin-left transition-all bg-white">
+            Name
+          </label>
+        </div>
+        <div className="relative mb-4 w-80">
+          <input
+            className="border-2 border-gray-400 rounded-lg p-2 w-full text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            type="text"
+            placeholder=" "
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <label className="absolute top-0 left-2 px-1 text-gray-500 font-bold text-xs transform origin-left transition-all bg-white">
+            Description
+          </label>
+        </div>
+        <div className="relative mb-4 w-80">
+          <input
+            className="hidden"
+            type="file"
+            id="file-upload"
+            onChange={(e) => handleFileUpload(e.target.files[0])}
+          />
+          <label
+            className="border-2 border-gray-400 rounded-lg p-2 w-full text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
+            htmlFor="file-upload"
+          >
+            {tokenURI ? "File uploaded" : "Upload File"}
+          </label>
+        </div>
         {uploadError && (
           <p className="text-red-500 mt-2">Please select a file to upload</p>
         )}
-        <div>
-          <button
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-            onClick={handleListNFT}
-          >
-            List NFT
-          </button>
+        <div className="flex items-center justify-between w-80 mb-4">
+          <p className="text-gray-500">Listing Fee:</p>
+          <p className="font-bold ml-2">{listingPrice.toString()} wei</p>
         </div>
+        <button
+          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+          onClick={handleButtonClick}
+        >
+          Upload NFT
+        </button>
+        <button
+          className="mt-4 bg-gradient-to-r from-pink-500 to-red-500 hover:from-red-500 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+          onClick={handleListNFT}
+          disabled={!tokenURI || loading}
+        >
+          {loading ? "Creating NFT..." : "Create NFT"}
+        </button>
+        {success && (
+          <p className="text-green-500 mt-4">NFT created successfully!</p>
+        )}
+        {isNFTCreated && (
+          <>
+            <p className="text-green-500 mt-4">Your NFT has been created!</p>
+            <a
+              href={`${tokenURI}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline mt-2"
+            >
+              View on IPFS
+            </a>
+          </>
+        )}
       </div>
-      <div></div>
     </div>
   );
 }

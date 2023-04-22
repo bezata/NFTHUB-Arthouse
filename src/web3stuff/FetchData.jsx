@@ -22,7 +22,7 @@ const NFTList = () => {
   return (
     <div className="flex flex-row flex-wrap justify-center">
       {itemsData.map((itemData, index) => (
-        <div key={index} className="p-2">
+        <div key={index} className="p-2 ">
           <NFTCard
             name={itemData.name}
             description={itemData.description}
