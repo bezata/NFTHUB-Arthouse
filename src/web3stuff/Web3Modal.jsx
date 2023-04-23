@@ -5,7 +5,7 @@ import {
 } from "@web3modal/ethereum";
 import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { celoAlfajores, goerli, sepolia } from "wagmi/chains";
+import { celoAlfajores } from "wagmi/chains";
 import { Web3Button } from "@web3modal/react";
 import { useAccount } from "wagmi";
 
