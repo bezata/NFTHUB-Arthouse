@@ -46,15 +46,31 @@ function ModalWallet() {
   });
 
   function redirectToUrl() {
-    const hasRedirected = localStorage.getItem("hasRedirected") === "true";
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasRedirected = urlParams.get("userId") !== null;
     if (!hasRedirected) {
-      localStorage.setItem("hasRedirected", "true");
-      window.location.href = "/";
+      const userId = getUniqueUserId();
+      const randomString =
+        Math.random().toString(36).substring(2, 15) +
+        Math.random().toString(36).substring(2, 15);
+      const timestamp = new Date().getTime();
+      const redirectUrl = `/?userId=${userId}&random=${randomString}&t=${timestamp}`;
+      window.location.href = redirectUrl;
     }
   }
+
   function resetRedirect() {
-    localStorage.removeItem("hasRedirected");
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.delete("userId");
+    window.history.replaceState({}, "", `?${urlParams.toString()}`);
   }
+
+  function getUniqueUserId() {
+    const timestamp = new Date().getTime();
+    const random = Math.floor(Math.random() * 1000000);
+    return `user-${timestamp}-${random}`;
+  }
+
   return (
     <WagmiConfig client={wagmiClient}>
       <Web3Modal
