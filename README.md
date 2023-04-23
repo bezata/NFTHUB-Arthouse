@@ -28,7 +28,7 @@ Run `npm run dev` to start the development server.
 
 ## Features
 
-* Create and list NFTs on a marketplace
+* Create and list NFTs on a exhibition
 * Upload NFT images to IPFS using Pinata API
 * Authenticate users using Wagmi protocol
 * View NFT details and minter information on showcase
