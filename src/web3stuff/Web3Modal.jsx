@@ -33,7 +33,6 @@ function ModalWallet() {
         isReconnected,
         isConnected,
       });
-      localStorage.setItem("isLoggedIn", "true");
       redirectToUrl();
     },
   });
@@ -42,7 +41,6 @@ function ModalWallet() {
     onDisconnect() {
       console.log("Disconnected");
       window.location.href = "/login";
-      localStorage.setItem("isLoggedIn", "false");
       resetRedirect();
     },
   });
