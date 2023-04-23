@@ -1,7 +1,9 @@
 # NFTHUB
-# You can mint your NFT on this project and you can exhibit on the page with little bit listing fee. for dacade
+# You can mint your NFT on this project and you can exhibit on the page with little bit listing fee. For dacade
+# If login screen stuck disconnect your wallet and connect it again(I'll fix that)
 # https://bezata.netlify.app/login
-#If login screen stuck just disconnect wallet and connect again
+
+
 
 # NFT Arthouse dApp on Celo Blockchain
 
