@@ -44,7 +44,6 @@ function NFTHUBComponent() {
         setUploadError(false);
       }
     } catch (error) {
-      console.error(error);
       // handle the error
     }
   }
@@ -84,9 +83,7 @@ function NFTHUBComponent() {
     try {
       await listNFT?.();
       setIsNFTCreated(true);
-    } catch (error) {
-      console.error(error);
-    }
+    } catch (error) {}
   };
 
   return (

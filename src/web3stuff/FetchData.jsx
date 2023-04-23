@@ -18,7 +18,6 @@ const NFTList = () => {
       setItemsData(fetchAllItems);
     }
   }, [fetchAllItems]);
-  console.log(itemsData);
   return (
     <div className="flex flex-row flex-wrap justify-center">
       {itemsData.map((itemData, index) => (
