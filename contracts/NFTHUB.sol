@@ -37,6 +37,7 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         string memory tokenURI
     ) public payable nonReentrant {
         require(msg.value >= listingPrice, "Listing price not met");
+        require(bytes(tokenURI).length > 0, "Token URI cannot be empty");
 
         _tokenIds.increment();
         uint256 tokenId = _tokenIds.current();
@@ -101,5 +102,12 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
             item.description,
             item.tokenURI
         );
+    }
+
+    function withdraw() public {
+        require(address(this).balance > 0, "Balance is zero");
+        require(msg.sender == owner, "Only owner can withdraw funds");
+
+        owner.transfer(address(this).balance);
     }
 }
