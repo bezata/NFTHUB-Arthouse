@@ -1,11 +1,9 @@
 # NFTHUB
- NFT ARTHOUSE with ASTRO framework , wagmi hooks and React.
-You can mint your NFT on this project and you can exhibit on the page with little bit listing fee.
-https://bezata.netlify.app/login
- for dacade
-If login screen stuck just disconnect wallet and connect again
+# You can mint your NFT on this project and you can exhibit on the page with little bit listing fee. for dacade
+# https://bezata.netlify.app/login
+#If login screen stuck just disconnect wallet and connect again
 
-# NFT Marketplace dApp on Celo Blockchain
+# NFT Arthouse dApp on Celo Blockchain
 
 ## Introduction
 
