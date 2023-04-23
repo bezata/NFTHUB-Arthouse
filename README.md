@@ -22,7 +22,6 @@ REACT_APP_PINATA_API_KEY=<your_pinata_api_key>
 REACT_APP_PINATA_SECRET_API_KEY=<your_pinata_secret_api_key>
 REACT_APP_NFTHUB_ADDRESS=<your_nfthub_contract_address>
 
-livecodeserver
 Copy
 
 Run `npm run dev` to start the development server.
