@@ -1,8 +1,3 @@
-# NFTHUB
-# You can mint your NFT on this project and you can exhibit on the page with little bit listing fee. For dacade
-# If login screen stuck disconnect your wallet and connect it again(I'll fix that)
-# https://bezata.netlify.app/login
-
 
 
 # NFT Arthouse dApp on Celo Blockchain
@@ -10,6 +5,11 @@
 ## Introduction
 
 This project is a decentralized application (dApp) built on the Celo blockchain that allows users to create and list their own non-fungible tokens (NFTs) on a showcase. The project uses the Wagmi protocol for authentication and the Pinata API for IPFS file uploads and Astro for framework.
+
+## Little messages before started
+ You can mint your NFT on this project and you can exhibit on the page with little bit listing fee. Built for dacade.org
+ If login screen stuck disconnect your wallet and connect it again(I'll fix that)
+# https://bezata.netlify.app/login
 
 ## Getting Started
 
