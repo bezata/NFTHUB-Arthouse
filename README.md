@@ -8,8 +8,7 @@ This project is a decentralized application (dApp) built on the Celo blockchain 
 
 ## Little messages before started
  You can mint your NFT on this project and you can exhibit on the page with little bit listing fee. Built for dacade.org
- If login screen stuck disconnect your wallet and connect it again(I'll fix that)
-# https://bezata.netlify.app/login
+ If login screen stuck disconnect your wallet and connect it again
 
 ## Getting Started
 
@@ -48,5 +47,6 @@ Contributions to this project are welcome. Please open a pull request with any c
 ## License
 
 This project is licensed under the MIT License. See the `LICENSE` file for more information.
+![website](https://user-images.githubusercontent.com/61169260/233838753-6ab61ee2-148b-4fe4-84b9-e48e3155cf2b.png)
 
-![website](https://user-images.githubusercontent.com/61169260/233833339-a6416016-49b9-4920-a3a0-ed383b1db145.png)
+# https://bezata.netlify.app/login
