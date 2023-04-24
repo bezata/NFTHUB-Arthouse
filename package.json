@@ -1,9 +1,9 @@
 {
   "name": "accessible-astro-dashboard",
-  "description": "An Accessible Dashboard Theme for Astro including a login page, a dashboard page and several other pages and components.",
+  "description": "NFTHUB Arthouse",
   "version": "1.1.4",
-  "author": "Mark Teekman",
-  "homepage": "https://accessible-astro.dev",
+  "author": "",
+  "homepage": "bezata.netlify.app",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
