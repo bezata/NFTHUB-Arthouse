@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
-    Counters.Counter private _itemIds;
 
     address payable owner;
     uint256 listingPrice = 1;
@@ -31,26 +30,32 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
 
     event ItemListed(uint256 indexed id, string name, string tokenURI);
 
+    /**
+        * @dev Validation checks are performed to ensure validity of the input data
+        * @notice Allow users to list and mint an NFT
+        * @param name The name of the NFT
+        * @param description The description of the NFT
+        * @param tokenURI The description of the tokenURI
+     */
     function listNFT(
-        string memory name,
-        string memory description,
-        string memory tokenURI
+        string calldata name,
+        string calldata description,
+        string calldata tokenURI
     ) public payable nonReentrant {
         require(msg.value >= listingPrice, "Listing price not met");
-
-        _tokenIds.increment();
+        require(bytes(name).length > 0, "Empty name");
+        require(bytes(description).length > 0, "Empty description");
+        require(bytes(tokenURI).length > 0, "Empty token URI");
+        
         uint256 tokenId = _tokenIds.current();
+		_tokenIds.increment();
 
         // Mint the NFT
         _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, tokenURI);
 
-        // Create a new item
-        _itemIds.increment();
-        uint256 itemId = _itemIds.current();
-
         Item memory newItem = Item(
-            itemId,
+            tokenId,
             msg.sender,
             address(this),
             tokenId,
@@ -58,23 +63,29 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
             description,
             tokenURI
         );
-        _idToItem[itemId] = newItem;
+        _idToItem[tokenId] = newItem;
 
-        emit ItemListed(itemId, name, tokenURI);
+        emit ItemListed(tokenId, name, tokenURI);
         payable(owner).transfer(listingPrice);
     }
 
+    /// @return listingPrice the price to list an NFT 
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
     }
 
+    /**
+        * @dev Callable only by deployer/owner
+        * @notice Allows the deployer/owner of the smart contract to update the listing price
+        * @param newPrice The new value for the listing price
+     */
     function setListingPrice(uint256 newPrice) public {
         require(msg.sender == owner, "Only owner can set listing price");
         listingPrice = newPrice;
     }
 
     function fetchItem(
-        uint256 itemId
+        uint256 tokenId
     )
         public
         view
@@ -88,9 +99,9 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
             string memory
         )
     {
-        require(_idToItem[itemId].minter != address(0), "Item does not exist");
+        require(_idToItem[tokenId].minter != address(0), "Item does not exist");
 
-        Item storage item = _idToItem[itemId];
+        Item storage item = _idToItem[tokenId];
 
         return (
             item.id,
