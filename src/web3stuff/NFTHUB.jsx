@@ -16,7 +16,6 @@ function NFTHUBComponent() {
   const [listingPrice, setListingPrice] = useState(0);
   const [uploadError, setUploadError] = useState(false);
   const [isNFTCreated, setIsNFTCreated] = useState(false);
-  const [last, setLastItem] = useState(0);
   const { data } = useContractRead({
     address: NFTHUB_ADDRESS,
     abi: nfthubABI,
@@ -24,15 +23,6 @@ function NFTHUBComponent() {
     onSuccess(data) {
       let newListingPrice = data.toNumber();
       setListingPrice(newListingPrice);
-    },
-  });
-  const { data: lastItem } = useContractRead({
-    address: NFTHUB_ADDRESS,
-    abi: nfthubABI,
-    functionName: "getLastMintedTokenId",
-    onSuccess(lastItem) {
-      let last = lastItem.toNumber();
-      setLastItem(last);
     },
   });
 
