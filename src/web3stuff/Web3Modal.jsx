@@ -1,3 +1,4 @@
+//refactor it using more react
 import {
   EthereumClient,
   w3mConnectors,
