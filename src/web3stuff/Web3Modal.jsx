@@ -50,11 +50,9 @@ function ModalWallet() {
     const hasRedirected = urlParams.get("userId") !== null;
     if (!hasRedirected) {
       const userId = getUniqueUserId();
-      const randomString =
-        Math.random().toString(36).substring(2, 15) +
-        Math.random().toString(36).substring(2, 15);
+      const randomString = Math.random().toString(36).substring(2, 15);
       const timestamp = new Date().getTime();
-      const redirectUrl = `/?userId=${userId}&random=${randomString}&t=${timestamp}`;
+      const redirectUrl = `/?userId=${userId}${randomString}${timestamp}`;
       window.location.href = redirectUrl;
     }
   }
