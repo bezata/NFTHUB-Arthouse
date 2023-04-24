@@ -17,6 +17,13 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         owner = payable(msg.sender);
     }
 
+    struct Metadata {
+    string author;
+    string date;
+    string keywords;
+}
+
+
     struct Item {
         uint256 id;
         address minter;
@@ -25,44 +32,55 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         string name;
         string description;
         string tokenURI;
+        Metadata metadata;
+
     }
+
+
 
     mapping(uint256 => Item) private _idToItem;
 
     event ItemListed(uint256 indexed id, string name, string tokenURI);
 
-    function listNFT(
-        string memory name,
-        string memory description,
-        string memory tokenURI
-    ) public payable nonReentrant {
-        require(msg.value >= listingPrice, "Listing price not met");
+  function listNFT(
+    string memory name,
+    string memory description,
+    string memory tokenURI,
+    string memory author,
+    string memory date,
+    string memory keywords
+) public payable nonReentrant {
+    require(msg.value >= listingPrice, "Listing price not met");
 
-        _tokenIds.increment();
-        uint256 tokenId = _tokenIds.current();
+    _tokenIds.increment();
+    uint256 tokenId = _tokenIds.current();
 
-        // Mint the NFT
-        _safeMint(msg.sender, tokenId);
-        _setTokenURI(tokenId, tokenURI);
+    // Mint the NFT
+    _safeMint(msg.sender, tokenId);
+    _setTokenURI(tokenId, tokenURI);
 
-        // Create a new item
-        _itemIds.increment();
-        uint256 itemId = _itemIds.current();
+    // Create a new item
+    _itemIds.increment();
+    uint256 itemId = _itemIds.current();
 
-        Item memory newItem = Item(
-            itemId,
-            msg.sender,
-            address(this),
-            tokenId,
-            name,
-            description,
-            tokenURI
-        );
-        _idToItem[itemId] = newItem;
+    Metadata memory metadata = Metadata(author, date, keywords);
 
-        emit ItemListed(itemId, name, tokenURI);
-        payable(owner).transfer(listingPrice);
-    }
+    Item memory newItem = Item(
+        itemId,
+        msg.sender,
+        address(this),
+        tokenId,
+        name,
+        description,
+        tokenURI,
+        metadata
+    );
+    _idToItem[itemId] = newItem;
+
+    emit ItemListed(itemId, name, tokenURI);
+    payable(owner).transfer(listingPrice);
+}
+
 
     function getListingPrice() public view returns (uint256) {
         return listingPrice;
@@ -73,33 +91,47 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         listingPrice = newPrice;
     }
 
-    function fetchItem(
-        uint256 itemId
+function fetchItem(
+    uint256 itemId
+)
+    public
+    view
+    returns (
+        uint256,
+        address,
+        address,
+        uint256,
+        string memory,
+        string memory,
+        string memory,
+        string memory,
+        string memory,
+        string memory
     )
-        public
-        view
-        returns (
-            uint256,
-            address,
-            address,
-            uint256,
-            string memory,
-            string memory,
-            string memory
-        )
-    {
-        require(_idToItem[itemId].minter != address(0), "Item does not exist");
+{
+    require(_idToItem[itemId].minter != address(0), "Item does not exist");
 
-        Item storage item = _idToItem[itemId];
+    Item storage item = _idToItem[itemId];
 
-        return (
-            item.id,
-            item.minter,
-            item.nftAddress,
-            item.tokenId,
-            item.name,
-            item.description,
-            item.tokenURI
-        );
+    return (
+        item.id,
+        item.minter,
+        item.nftAddress,
+        item.tokenId,
+        item.name,
+        item.description,
+        item.tokenURI,
+        item.metadata.author,
+        item.metadata.date,
+        item.metadata.keywords
+    );
+}
+
+
+    function withdraw() public {
+        require(msg.sender == owner, "Only the contract owner can withdraw funds");
+        uint256 balance = address(this).balance;
+        payable(owner).transfer(balance);
     }
+
 }
