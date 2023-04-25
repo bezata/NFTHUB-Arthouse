@@ -51,11 +51,11 @@ function ModalWallet() {
 
   function redirectToUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get("userId");
-    if (!userId) {
-      const newUserId = getUniqueUserId();
-      urlParams.set("userId", newUserId);
-      const redirectUrl = `${window.location.pathname}?${urlParams.toString()}`;
+    const hasRedirected = urlParams.get("userId") !== null;
+    if (!hasRedirected) {
+      const random = Math.floor(Math.random() * 1000000);
+      const userId = random;
+      const redirectUrl = `/?userId=${userId}`;
       window.location.href = redirectUrl;
     }
   }
