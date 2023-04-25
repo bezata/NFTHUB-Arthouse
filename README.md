@@ -15,8 +15,7 @@ This project is a decentralized application (dApp) built on the Celo blockchain 
 To run this project locally, you will need to have Node.js and npm installed on your machine. Clone the repository and run `npm install` to install the necessary dependencies.
 
 Create a `.env` file in the root directory and add the following variables:
-
-## MNEMONIC= <your MNEMONIC> 
+ MNEMONIC= your MNEMONIC
 Deploy your contract and change the address and abi.
 
 Run `npm run dev` to start the development server.
