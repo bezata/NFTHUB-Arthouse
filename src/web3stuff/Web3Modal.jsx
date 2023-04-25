@@ -1,4 +1,3 @@
-//refactor it using more react
 import {
   EthereumClient,
   w3mConnectors,
@@ -45,15 +44,18 @@ function ModalWallet() {
       resetRedirect();
     },
   });
+  function getUniqueUserId() {
+    const random = Math.floor(Math.random() * 1000000);
+    return `user-${random}`;
+  }
 
   function redirectToUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    const hasRedirected = urlParams.get("userId") !== null;
-    if (!hasRedirected) {
-      const userId = getUniqueUserId();
-      const randomString = Math.random().toString(36).substring(2, 15);
-      const timestamp = new Date().getTime();
-      const redirectUrl = `/?userId=${userId}${randomString}&t=${timestamp}`;
+    const userId = urlParams.get("userId");
+    if (!userId) {
+      const newUserId = getUniqueUserId();
+      urlParams.set("userId", newUserId);
+      const redirectUrl = `${window.location.pathname}?${urlParams.toString()}`;
       window.location.href = redirectUrl;
     }
   }
@@ -62,12 +64,6 @@ function ModalWallet() {
     const urlParams = new URLSearchParams(window.location.search);
     urlParams.delete("userId");
     window.history.replaceState({}, "", `?${urlParams.toString()}`);
-  }
-
-  function getUniqueUserId() {
-    const timestamp = new Date().getTime();
-    const random = Math.floor(Math.random() * 1000000);
-    return `user-${timestamp}-${random}`;
   }
 
   return (
