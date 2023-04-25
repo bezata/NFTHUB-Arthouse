@@ -44,10 +44,6 @@ function ModalWallet() {
       resetRedirect();
     },
   });
-  function getUniqueUserId() {
-    const random = Math.floor(Math.random() * 1000000);
-    return `user-${random}`;
-  }
 
   function redirectToUrl() {
     const urlParams = new URLSearchParams(window.location.search);
