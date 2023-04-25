@@ -16,9 +16,8 @@ To run this project locally, you will need to have Node.js and npm installed on 
 
 Create a `.env` file in the root directory and add the following variables:
 
-MNEMONIC=<your MNEMONIC>
-
-Copy
+## MNEMONIC= <your MNEMONIC> 
+Deploy your contract and change the address and abi.
 
 Run `npm run dev` to start the development server.
 
