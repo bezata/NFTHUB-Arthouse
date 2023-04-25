@@ -31,6 +31,7 @@ Run `npm run dev` to start the development server.
 * Upload NFT images to IPFS using Pinata API
 * Authenticate users using Wagmi protocol
 * View NFT details and minter information on showcase
+* Added hardhat integration and truffle dashboard support
 
 ## Technologies Used
 * Astro
@@ -39,6 +40,7 @@ Run `npm run dev` to start the development server.
 * Wagmi protocol
 * Pinata API
 * Solidity
+* Hardhat and Truffle dashboard
 
 ## Contributing
 
