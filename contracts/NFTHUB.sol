@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "hardhat/console.sol";
 
 contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
     using Counters for Counters.Counter;
@@ -46,14 +47,14 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         require(bytes(name).length > 0, "Empty name");
         require(bytes(description).length > 0, "Empty description");
         require(bytes(tokenURI).length > 0, "Empty token URI");
-
+     
         uint256 tokenId = _tokenIds.current();
 		_tokenIds.increment();
 
         // Mint the NFT
         _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, tokenURI);
-
+        console.log("NFT minted successfully to %s", msg.sender);
         // Create a new item
         _itemIds.increment();
         uint256 itemId = _itemIds.current();

@@ -49,7 +49,7 @@ function ModalWallet() {
     const urlParams = new URLSearchParams(window.location.search);
     const hasRedirected = urlParams.get("userId") !== null;
     if (!hasRedirected) {
-      const random = Math.floor(Math.random() * 100);
+      const random = Math.floor(Math.random() * 1000000);
       const userId = random;
       const redirectUrl = `/?userId=${userId}`;
       window.location.href = redirectUrl;

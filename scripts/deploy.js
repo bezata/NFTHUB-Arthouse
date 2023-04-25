@@ -7,8 +7,6 @@
 const hre = require("hardhat");
 
 async function main() {
-
-
   const NFTHub = await hre.ethers.getContractFactory("NFTHUB");
   const hub = await NFTHub.deploy();
 
@@ -16,7 +14,6 @@ async function main() {
 
   console.log(hub.address);
 }
-
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {

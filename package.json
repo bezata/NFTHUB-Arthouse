@@ -38,8 +38,10 @@
     "bignumber.js": "^9.1.1",
     "blob-to-buffer": "^1.2.9",
     "bootstrap": "^5.2.3",
+    "dotenv": "^16.0.3",
     "dropzone": "^6.0.0-beta.2",
     "ethers": "^5.7.2",
+    "hardhat-deploy": "^0.11.26",
     "ipfs": "^0.66.0",
     "ipfs-api": "^26.1.2",
     "ipfs-http-client": "^60.0.0",
@@ -55,6 +57,7 @@
     "web3": "^1.9.0"
   },
   "devDependencies": {
+    "@truffle/dashboard-hardhat-plugin": "^0.2.1",
     "astro": "^2.3.0",
     "hardhat": "^2.13.0",
     "sass": "^1.49.9",
