@@ -44,12 +44,12 @@ contract NFTHUB is ERC721URIStorage, ReentrancyGuard {
 
 // list an nft in the hub
   function listNFT(
-    string memory name,
-    string memory description,
-    string memory tokenURI,
-    string memory author,
-    string memory date,
-    string memory keywords
+    string calldata name,
+    string calldata description,
+    string calldata tokenURI,
+    string calldata author,
+    string calldata date,
+    string calldata keywords
 ) public payable nonReentrant {
     require(msg.value >= listingPrice, "Listing price not met");
 
