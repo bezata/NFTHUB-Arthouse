@@ -46,20 +46,11 @@ function ModalWallet() {
   });
 
   function redirectToUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const hasRedirected = urlParams.get("userId") !== null;
-    if (!hasRedirected) {
-      const random = Math.floor(Math.random() * 1000000);
-      const userId = random;
-      const redirectUrl = `/?userId=${userId}`;
-      window.location.href = redirectUrl;
-    }
+    window.location.href = "/";
   }
 
   function resetRedirect() {
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.delete("userId");
-    window.history.replaceState({}, "", `?${urlParams.toString()}`);
+    window.location.href = "/login";
   }
 
   return (
