@@ -31,14 +31,6 @@ function ModalWallet() {
     },
   });
 
-  const accountset = useAccount({
-    onDisconnect() {
-      window.location.href = "/login";
-    },
-  });
-
-
-
   return (
     <WagmiConfig client={wagmiClient}>
       <Web3Modal
