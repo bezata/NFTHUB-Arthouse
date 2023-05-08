@@ -23,14 +23,18 @@ import { Icon } from "astro-icon";
         </div>
         <div class="inner__form space-content">
           <Notification>
-            <Icon pack="majesticons" name="information-circle-line" /><p
-              class="size-14"
-            >
-              Welcome to Arthouse <button class="arthouse-button bg-orange-300 hover:bg-orange-400" onclick="window.location.href = '';">
+            <Icon pack="majesticons" name="information-circle-line" /><p class="size-14">
+              Welcome to Arthouse 
+              <button onclick="location.href='/'" class="arthouse-button" style="display: inline-block; padding: 8px 10px; background-color: #FDB813; color: #FFFFFF; font-size: 14px; font-weight: 600; border: none; border-radius: 10px; text-align: center; text-decoration: none; cursor: pointer; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3); transition: all 0.3s ease-in-out;" >
                 <strong>Go to homepage</strong>
               </button>
+                <svg class="w-5 h-5 inline-block mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22a10 10 0 0 1-6.33-2.29c-.43-.36-.67-.89-.67-1.44V16a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2.27c0 .55-.24 1.08-.67 1.44A10 10 0 0 1 12 22z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span class="font-semibold text-xs uppercase tracking-wider text-white">Go to homepage</span>
+              </button>
             </p>
-            
           </Notification>
           <div class="space-content"></div>
         </div>
@@ -55,34 +59,59 @@ import { Icon } from "astro-icon";
   @use "../assets/scss/base/space" as *;
   @import url('https://fonts.cdnfonts.com/css/artistic');
   
-
   .arthouse-button {
   display: inline-block;
-  padding: 2px;
-  background-color: #FFB347;
-  color: #ffffff;
-  font-size: 8px;
+  padding: 6px 10px;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 500;
   border: none;
-  border-radius: 0;
+  border-radius: 0px;
   text-align: center;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease-in-out;
-  border-radius: 20%;
+  background-image: linear-gradient(to right, #FFC371, #FF5F6D);
 }
 
 .arthouse-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .arthouse-button strong {
-  
-  font-size: 16px;
-  letter-spacing: 4px;
-  font-family: 'artistic', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+}
 
+.arthouse-button::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: transparent;
+  border-radius: inherit;
+  transform: scaleX(0.8) scaleY(0.5);
+  opacity: 0.4;
+  transition: all 0.3s ease-in-out;
+}
+
+.arthouse-button:hover::before {
+  transform: scaleX(1.2) scaleY(1);
+  opacity: 0.2;
+  background-color: #FFFFFF;
+}
+
+.arthouse-button:active {
+  transform: translateY(0px);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
   .login {
     display: grid;
