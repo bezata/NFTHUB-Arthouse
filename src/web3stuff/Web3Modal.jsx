@@ -7,7 +7,7 @@ import { Web3Modal } from "@web3modal/react";
 import { configureChains, createClient, WagmiConfig } from "wagmi";
 import { celoAlfajores } from "wagmi/chains";
 import { Web3Button } from "@web3modal/react";
-import { useAccount } from "wagmi";
+
 
 const chains = [celoAlfajores];
 const projectId = "6e18bca83b6d8c08562669f22a83ca97";
@@ -25,12 +25,6 @@ const wagmiClient = createClient({
 const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 function ModalWallet() {
-  const account = useAccount({
-    onConnect({ address, connector, isReconnected, isConnected }) {
-      window.location.href = "/";
-    },
-  });
-
   return (
     <WagmiConfig client={wagmiClient}>
       <Web3Modal

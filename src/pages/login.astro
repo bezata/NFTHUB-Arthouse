@@ -2,7 +2,6 @@
 import LoginLayout from "../layouts/LoginLayout.astro";
 import { Notification } from "accessible-astro-components";
 import { Icon } from "astro-icon";
-import ModalWallet from "../web3stuff/Web3Modal";
 ---
 
 <LoginLayout title="Login">
@@ -27,9 +26,11 @@ import ModalWallet from "../web3stuff/Web3Modal";
             <Icon pack="majesticons" name="information-circle-line" /><p
               class="size-14"
             >
-              Log in using <strong>Connect Wallet</strong>.
+              Welcome to Arthouse <button class="arthouse-button bg-orange-300 hover:bg-orange-400" onclick="location.href = '/';">
+                <strong>Go to homepage</strong>
+              </button>
             </p>
-            <ModalWallet client:load />
+            
           </Notification>
           <div class="space-content"></div>
         </div>
@@ -48,10 +49,41 @@ import ModalWallet from "../web3stuff/Web3Modal";
 </LoginLayout>
 
 <style lang="scss">
+  
   @use "../assets/scss/base/breakpoint" as *;
   @use "../assets/scss/base/size" as *;
   @use "../assets/scss/base/space" as *;
+  @import url('https://fonts.cdnfonts.com/css/artistic');
+  
 
+  .arthouse-button {
+  display: inline-block;
+  padding: 2px;
+  background-color: #FFB347;
+  color: #ffffff;
+  font-size: 8px;
+  border: none;
+  border-radius: 0;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease-in-out;
+  border-radius: 20%;
+}
+
+.arthouse-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.5);
+}
+
+.arthouse-button strong {
+  
+  font-size: 16px;
+  letter-spacing: 4px;
+  font-family: 'artistic', sans-serif;
+
+}
   .login {
     display: grid;
 
