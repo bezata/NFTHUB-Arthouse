@@ -27,31 +27,17 @@ const ethereumClient = new EthereumClient(wagmiClient, chains);
 function ModalWallet() {
   const account = useAccount({
     onConnect({ address, connector, isReconnected, isConnected }) {
-      console.log("Connected", {
-        address,
-        connector,
-        isReconnected,
-        isConnected,
-      });
-      redirectToUrl();
+      window.location.href = "/";
     },
   });
 
   const accountset = useAccount({
     onDisconnect() {
-      console.log("Disconnected");
       window.location.href = "/login";
-      resetRedirect();
     },
   });
 
-  function redirectToUrl() {
-    window.location.href = "/";
-  }
 
-  function resetRedirect() {
-    window.location.href = "/login";
-  }
 
   return (
     <WagmiConfig client={wagmiClient}>
