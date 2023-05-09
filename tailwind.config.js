@@ -7,6 +7,9 @@ module.exports = {
     "./src/web3stuff/WagmiApp.jsx",
     "./src/pages/index.astro",
     "./src/pages/login.astro",
+    "./src/**/*.astro",
+    "./pages/**/*.astro",
+    "./src/layouts/**/*.astro",
   ],
   theme: {
     extend: {
