@@ -5,9 +5,9 @@ import {
   useContractWrite,
 } from "wagmi";
 import nfthubABI from "./abi/NFTHUB.json";
-import { UploadFileToIPFS } from "./Dropzone";
+import { UploadFileToIPFS, UploadJSONToIPFS } from "./Dropzone";
 
-const NFTHUB_ADDRESS = "0xCD387b47A57bb57C99Ef1Aa578019C9253b845eA";
+const NFTHUB_ADDRESS = "0xf38E4A2DDa3db2b628888c0eD736E7Bc6c61954E";
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");
@@ -16,6 +16,8 @@ function NFTHUBComponent() {
   const [listingPrice, setListingPrice] = useState(0);
   const [uploadError, setUploadError] = useState(false);
   const [isNFTCreated, setIsNFTCreated] = useState(false);
+  const [isCreatingNFT, setIsCreatingNFT] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const { data } = useContractRead({
     address: NFTHUB_ADDRESS,
     abi: nfthubABI,
@@ -28,23 +30,25 @@ function NFTHUBComponent() {
 
   async function handleFileUpload(file) {
     try {
+      setIsUploadingImage(true);
       const { success, pinataURL } = await UploadFileToIPFS(file);
       if (success) {
-        setTokenURI(pinataURL);
-        setUploadError(false);
+        const metadata = {
+          name,
+          description,
+          image: pinataURL,
+        };
+        const json = JSON.stringify(metadata);
+        const { success, pinataURLJSON } = await UploadJSONToIPFS(json);
+        if (success) {
+          setTokenURI(pinataURLJSON);
+          setUploadError(false);
+        }
       }
+      setIsUploadingImage(false);
     } catch (error) {
+      setIsUploadingImage(false);
       // handle the error
-    }
-  }
-
-  function handleButtonClick() {
-    const fileInput = document.getElementById("file-upload");
-    const file = fileInput.files[0];
-    if (file) {
-      handleFileUpload(file);
-    } else {
-      setUploadError(true);
     }
   }
 
@@ -52,14 +56,14 @@ function NFTHUBComponent() {
     address: NFTHUB_ADDRESS,
     abi: nfthubABI,
     functionName: "listNFT",
-    args: [name, description, tokenURI],
+    args: [tokenURI],
     value: listingPrice,
     overrides: {
       value: listingPrice.toString(),
     },
   });
   const {
-    data: txData,
+    data: listtx,
     isLoading: loading,
     isSuccess: success,
     write: listNFT,
@@ -71,9 +75,12 @@ function NFTHUBComponent() {
       return;
     }
     try {
+      setIsCreatingNFT(true);
       await listNFT?.();
       setIsNFTCreated(true);
-    } catch (error) {}
+    } catch (error) {
+      setIsCreatingNFT(false);
+    }
   };
 
   return (
@@ -125,32 +132,35 @@ function NFTHUBComponent() {
           <p className="text-gray-500">Listing Fee:</p>
           <p className="font-bold ml-2">{listingPrice.toString()} GCELO</p>
         </div>
-        <button
-          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
-          onClick={handleButtonClick}
-        >
-          Upload Image
-        </button>
+
         <button
           className="mt-4 bg-gradient-to-r from-pink-500 to-red-500 hover:from-red-500 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
           onClick={handleListNFT}
-          disabled={!tokenURI || loading}
+          disabled={!tokenURI || loading || isUploadingImage}
         >
-          {loading ? "Creating NFT..." : "Create NFT"}
+          {isUploadingImage ? "Uploading Image..." : "Create NFT"}
         </button>
         {success && (
-          <p className="text-green-500 mt-4">NFT created successfully!</p>
+          <>
+            <p className="text-green-500 mt-4">NFT created successfully!</p>
+            <a href={`https://explorer.celo.org/alfajores/tx/${listtx}`}>
+              {" "}
+              Look at the transaction!
+            </a>
+          </>
         )}
         {isNFTCreated && (
           <>
-            <p className="text-green-500 mt-4">Your NFT has been created!</p>
+            <p className="text-green-500 mt-4">
+              Your NFT Metadata has been created!
+            </p>
             <a
               href={`${tokenURI}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-blue-500 underline mt-2"
             >
-              View on IPFS
+              View on PINATA
             </a>
           </>
         )}
