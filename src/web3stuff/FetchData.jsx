@@ -14,19 +14,23 @@ const NFTList = () => {
     functionName: "getAllItems",
     watch: true,
   });
+  console.log(fetchAllItems);
 
   useEffect(() => {
     async function fetchNFTMetadata() {
       const updatedItemsData = await Promise.all(
         fetchAllItems.map(async (itemData) => {
-          const response = await fetch(itemData.tokenURI);
-          const metadataString = await response.text();
-          const metadata = JSON.parse(metadataString);
+          const metadataResponse = await fetch(itemData.tokenURI);
+          const metadataJson = await metadataResponse.json();
           return {
-            ...itemData,
-            name: metadata.name || "",
-            description: metadata.description || "",
-            image: metadata.image || "",
+            id: itemData.id.toString(),
+            tokenId: itemData.tokenId.toString(),
+            nftAddress: itemData.nftAddress,
+            minter: itemData.minter,
+            tokenURI: itemData.tokenURI,
+            name: metadataJson.name || "",
+            description: metadataJson.description || "",
+            image: metadataJson.image || "",
           };
         })
       );
