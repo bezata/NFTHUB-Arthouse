@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "openzeppelin-solidity/contracts/token/ERC721/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
     using Counters for Counters.Counter;
@@ -30,17 +30,14 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
 
     event ItemListed(uint256 indexed id, string tokenURI);
 
-    function listNFT(
-        string memory tokenURI,
-        address minter,
-        uint256 tokenId
-    ) public payable nonReentrant {
+    function listNFT(string memory tokenURI) public payable nonReentrant {
         require(msg.value >= listingPrice, "Listing price not met");
 
         _tokenIds.increment();
+        uint256 tokenId = _tokenIds.current();
 
         // Mint the NFT
-        _safeMint(minter, tokenId);
+        _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, tokenURI);
 
         // Create a new item
@@ -49,7 +46,7 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
 
         Item memory newItem = Item(
             itemId,
-            minter,
+            msg.sender,
             address(this),
             tokenId,
             tokenURI
@@ -95,14 +92,7 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         for (uint256 i = 0; i < _itemIdsArray.length; i++) {
             uint256 itemId = _itemIdsArray[i];
             Item storage item = _idToItem[itemId];
-
-            items[i] = Item({
-                id: item.id,
-                minter: item.minter,
-                nftAddress: item.nftAddress,
-                tokenId: item.tokenId,
-                tokenURI: item.tokenURI
-            });
+            items[i] = item;
         }
 
         return items;

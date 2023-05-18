@@ -7,7 +7,7 @@ import {
 import nfthubABI from "./abi/NFTHUB.json";
 import { UploadFileToIPFS, UploadJSONToIPFS } from "./Dropzone";
 
-const NFTHUB_ADDRESS = "0x0c5d5A9009E45Ee9eE7e30Dac5257DD836c4a98A";
+const NFTHUB_ADDRESS = "0x95799583bFa9C33d0cab038e96d973661745bccc";
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");

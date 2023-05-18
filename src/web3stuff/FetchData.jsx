@@ -3,7 +3,7 @@ import { useContractRead } from "wagmi";
 import nfthubABI from "./abi/NFTHUB.json";
 import NFTCard from "./NFTCard";
 
-const NFTHUB_ADDRESS = "0xb51F154f4a822EB979017353c63e90b549444570";
+const NFTHUB_ADDRESS = "0x95799583bFa9C33d0cab038e96d973661745bccc";
 
 const NFTList = () => {
   const [itemsData, setItemsData] = useState([]);
