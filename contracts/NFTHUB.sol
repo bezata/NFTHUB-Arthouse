@@ -3,27 +3,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-
-contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
-    using Counters for Counters.Counter;
-    Counters.Counter private _tokenIds;
-    Counters.Counter private _itemIds;
-
-    address payable owner;
-    uint256 listingPrice = 1;
-
-    constructor() ERC721("NFTHUB", "NFTH") {
-        owner = payable(msg.sender);
-    }
-
-    struct Item {
-        uint256 id;// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "openzeppelin-solidity/contracts/token/ERC721/ERC721URIStorage.sol";
 
 contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
     using Counters for Counters.Counter;

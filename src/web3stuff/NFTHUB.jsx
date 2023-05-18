@@ -7,7 +7,7 @@ import {
 import nfthubABI from "./abi/NFTHUB.json";
 import { UploadFileToIPFS, UploadJSONToIPFS } from "./Dropzone";
 
-const NFTHUB_ADDRESS = "0x0c5d5A9009E45Ee9eE7e30Dac5257DD836c4a98A";
+const NFTHUB_ADDRESS = "0xd1ADB5EB0DA3EAed6D676E3139C68d6fE77e7eaa";
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");
@@ -148,7 +148,7 @@ function NFTHUBComponent() {
           <p className="text-red-500 mt-2">Please select a file to upload</p>
         )}
         <div className="flex items-center justify-between w-80 mb-4">
-          <p className="text-gray-500 px-1 text-gray-500 font-bold text-xs transform origin-left transition-all">
+          <p className="text-gray-500 px-1  font-bold text-xs transform origin-left transition-all">
             Listing Fee:
           </p>
           <p className="font-bold ml-2 px-1 text-gray-500 text-xs transform origin-left transition-all">
