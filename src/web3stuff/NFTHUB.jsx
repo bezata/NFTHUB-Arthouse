@@ -7,7 +7,7 @@ import {
 import nfthubABI from "./abi/NFTHUB.json";
 import { UploadFileToIPFS, UploadJSONToIPFS } from "./Dropzone";
 
-const NFTHUB_ADDRESS = "0xd1ADB5EB0DA3EAed6D676E3139C68d6fE77e7eaa";
+const NFTHUB_ADDRESS = "0x0c5d5A9009E45Ee9eE7e30Dac5257DD836c4a98A";
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");
@@ -141,7 +141,7 @@ function NFTHUBComponent() {
             className="border-2 border-gray-400 rounded-lg p-2 w-full text-gray-800 px- font-bold text-xs transform origin-left transition-all placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer"
             htmlFor="file-upload"
           >
-            {tokenURI ? "File uploaded" : "Upload File"}
+            {tokenURI ? "Image uploaded" : "Upload Image"}
           </label>
         </div>
         {uploadError && (
@@ -165,16 +165,18 @@ function NFTHUBComponent() {
         {success && (
           <>
             <p className="text-green-500 mt-4">NFT created successfully!</p>
-            <a href={`https://explorer.celo.org/alfajores/tx/${listtx}`}>
-              {" "}
-              Look at the transaction!
-            </a>
+            {transactionHash && (
+              <a
+                href={`https://explorer.celo.org/alfajores/tx/${transactionHash}`}
+              >
+                Look at the transaction!
+              </a>
+            )}
           </>
         )}
       </div>
     </div>
   );
 }
-
 
 export default NFTHUBComponent;

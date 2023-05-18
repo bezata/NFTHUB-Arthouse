@@ -1,48 +1,36 @@
 import axios from "axios";
-//require('dotenv').config();
-const key = "37349a08b8489b950b38";
-const secret =
+
+const pinataApiKey = "37349a08b8489b950b38";
+const pinataSecretApiKey =
   "f9c107f9b3be86eded9f0acba053effd8318bd98d87d48dedd97ea3cc36781fb";
+const pinataBaseURL = "https://api.pinata.cloud/pinning";
 
 export const UploadFileToIPFS = async (file) => {
-  const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-  //making axios POST request to Pinata ⬇️
+  const url = `${pinataBaseURL}/pinFileToIPFS`;
 
-  let data = new FormData();
-  data.append("file", file);
+  const formData = new FormData();
+  formData.append("file", file);
 
-  const metadata = JSON.stringify({
-    name: file.name,
-    keyvalues: {
-      exampleKey: "exampleValue",
-    },
-  });
-  data.append("pinataMetadata", metadata);
-
-  return axios
-    .post(url, data, {
-      maxBodyLength: "Infinity",
+  try {
+    const response = await axios.post(url, formData, {
       headers: {
-        "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-        pinata_api_key: key,
-        pinata_secret_api_key: secret,
+        "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
+        pinata_api_key: pinataApiKey,
+        pinata_secret_api_key: pinataSecretApiKey,
       },
-    })
-    .then(function (response) {
-      console.log("image uploaded", response.data.IpfsHash);
-      return {
-        success: true,
-        pinataURL:
-          "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash,
-      };
-    })
-    .catch(function (error) {
-      console.log(error);
-      return {
-        success: false,
-        message: error.message,
-      };
     });
+
+    return {
+      success: true,
+      pinataURL: `https://gateway.pinata.cloud/ipfs/${response.data.IpfsHash}`,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: error.message,
+    };
+  }
 };
 
 export const UploadJSONToIPFS = async (metadata, pinataMetadata) => {
@@ -61,8 +49,8 @@ export const UploadJSONToIPFS = async (metadata, pinataMetadata) => {
   try {
     const response = await axios.post(url, data, {
       headers: {
-        pinata_api_key: key,
-        pinata_secret_api_key: secret,
+        pinata_api_key: pinataApiKey,
+        pinata_secret_api_key: pinataSecretApiKey,
       },
     });
 
