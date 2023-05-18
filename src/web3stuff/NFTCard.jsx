@@ -1,5 +1,3 @@
-import React from "react";
-
 function NFTCard({ name, description, image, minterAddress }) {
   return (
     <div className="bg-gray-800 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { ethers } from "ethers";
 import { useContractRead } from "wagmi";
 import nfthubABI from "./abi/NFTHUB.json";
 import NFTCard from "./NFTCard";
 
-const NFTHUB_ADDRESS = "0x7D73aB74D892704C8582Afd9Ce2A0968266527e5";
+const NFTHUB_ADDRESS = "0x0c5d5A9009E45Ee9eE7e30Dac5257DD836c4a98A";
 
 const NFTList = () => {
   const [itemsData, setItemsData] = useState([]);
@@ -12,20 +13,44 @@ const NFTList = () => {
     abi: nfthubABI,
     functionName: "getAllItems",
   });
+
   useEffect(() => {
-    if (fetchAllItems) {
-      setItemsData(fetchAllItems);
-    }
+    const fetchMetadata = async () => {
+      if (fetchAllItems) {
+        const metadata = await Promise.all(
+          fetchAllItems.map(async ({ id, minter, nftAddress, tokenId, tokenURI }) => {
+            // Fetch the JSON metadata from IPFS
+            const res = await fetch(tokenURI);
+            const metadata = await res.json();
+
+            return {
+              id,
+              minterAddress: minter,
+              nftAddress,
+              tokenId,
+              metadata: {
+                name: metadata.name || "",
+                description: metadata.description || "",
+                image: metadata.image || "",
+              },
+            };
+          })
+        );
+        setItemsData(metadata);
+      }
+    };
+    fetchMetadata();
   }, [fetchAllItems]);
+
   return (
     <div className="flex flex-row flex-wrap justify-center">
       {itemsData.map((itemData, index) => (
-        <div key={index} className="p-2">
+        <div key={index} className="p-2 ">
           <NFTCard
-            name={itemData.name}
-            description={itemData.description}
-            image={itemData.tokenURI}
-            minterAddress={itemData.minter}
+            name={itemData.metadata.name}
+            description={itemData.metadata.description}
+            image={itemData.metadata.image}
+            minterAddress={itemData.minterAddress}
           />
         </div>
       ))}

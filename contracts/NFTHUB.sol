@@ -22,15 +22,21 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         address minter;
         address nftAddress;
         uint256 tokenId;
+        string name;
+        string description;
         string tokenURI;
     }
 
     mapping(uint256 => Item) private _idToItem;
     uint256[] private _itemIdsArray;
 
-    event ItemListed(uint256 indexed id, string tokenURI);
+    event ItemListed(uint256 indexed id, string name, string tokenURI);
 
-    function listNFT(string memory tokenURI) public payable nonReentrant {
+    function listNFT(
+        string memory name,
+        string memory description,
+        string memory tokenURI
+    ) public payable nonReentrant {
         require(msg.value >= listingPrice, "Listing price not met");
 
         _tokenIds.increment();
@@ -49,12 +55,14 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
             msg.sender,
             address(this),
             tokenId,
+            name,
+            description,
             tokenURI
         );
         _idToItem[itemId] = newItem;
         _itemIdsArray.push(itemId);
 
-        emit ItemListed(itemId, tokenURI);
+        emit ItemListed(itemId, name, tokenURI);
         payable(owner).transfer(listingPrice);
     }
 
@@ -67,7 +75,9 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         listingPrice = newPrice;
     }
 
-    function fetchItem(uint256 itemId)
+    function fetchItem(
+        uint256 itemId
+    )
         public
         view
         returns (
@@ -75,15 +85,24 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
             address,
             address,
             uint256,
+            string memory,
+            string memory,
             string memory
         )
     {
         require(_idToItem[itemId].minter != address(0), "Item does not exist");
 
         Item storage item = _idToItem[itemId];
-        string memory tokenURI = item.tokenURI;
 
-        return (item.id, item.minter, item.nftAddress, item.tokenId, tokenURI);
+        return (
+            item.id,
+            item.minter,
+            item.nftAddress,
+            item.tokenId,
+            item.name,
+            item.description,
+            item.tokenURI
+        );
     }
 
     function getAllItems() public view returns (Item[] memory) {
@@ -92,6 +111,7 @@ contract NFTHUB is ReentrancyGuard, ERC721URIStorage {
         for (uint256 i = 0; i < _itemIdsArray.length; i++) {
             uint256 itemId = _itemIdsArray[i];
             Item storage item = _idToItem[itemId];
+
             items[i] = item;
         }
 
