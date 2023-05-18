@@ -7,11 +7,7 @@ import {
 import nfthubABI from "./abi/NFTHUB.json";
 import { UploadFileToIPFS } from "./Dropzone";
 
-<<<<<<< Updated upstream
-const NFTHUB_ADDRESS = "0xCD387b47A57bb57C99Ef1Aa578019C9253b845eA";
-=======
-const NFTHUB_ADDRESS = "0x0c5d5A9009E45Ee9eE7e30Dac5257DD836c4a98A";
->>>>>>> Stashed changes
+const NFTHUB_ADDRESS = "0x7D73aB74D892704C8582Afd9Ce2A0968266527e5";
 
 function NFTHUBComponent() {
   const [name, setName] = useState("");
@@ -20,13 +16,6 @@ function NFTHUBComponent() {
   const [listingPrice, setListingPrice] = useState(0);
   const [uploadError, setUploadError] = useState(false);
   const [isNFTCreated, setIsNFTCreated] = useState(false);
-<<<<<<< Updated upstream
-=======
-  const [isCreatingNFT, setIsCreatingNFT] = useState(false);
-  const [isUploadingImage, setIsUploadingImage] = useState(false);
-  const [transactionHash, setTransactionHash] = useState("");
-
->>>>>>> Stashed changes
   const { data } = useContractRead({
     address: NFTHUB_ADDRESS,
     abi: nfthubABI,
@@ -41,30 +30,8 @@ function NFTHUBComponent() {
     try {
       const { success, pinataURL } = await UploadFileToIPFS(file);
       if (success) {
-<<<<<<< Updated upstream
         setTokenURI(pinataURL);
         setUploadError(false);
-=======
-        const metadata = {
-          name: name,
-          description: description,
-          image: pinataURL,
-        };
-        const pinataMetadata = {
-          name: name,
-          description: description,
-          image: pinataURL,
-        };
-
-        const { success: jsonSuccess, pinataURLJSON } = await UploadJSONToIPFS(
-          metadata,
-          pinataMetadata
-        );
-        if (jsonSuccess) {
-          setTokenURI(pinataURLJSON);
-          setUploadError(false);
-        }
->>>>>>> Stashed changes
       }
     } catch (error) {
       // handle the error
@@ -168,15 +135,12 @@ function NFTHUBComponent() {
             {listingPrice.toString()} GCELO
           </p>
         </div>
-<<<<<<< Updated upstream
         <button
           className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-purple-500 hover:to-blue-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
           onClick={handleButtonClick}
         >
           Upload Image
         </button>
-=======
->>>>>>> Stashed changes
         <button
           className="mt-4 bg-gradient-to-r from-pink-500 to-red-500 hover:from-red-500 hover:to-pink-500 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-110"
           onClick={handleListNFT}
@@ -185,7 +149,6 @@ function NFTHUBComponent() {
           {loading ? "Creating NFT..." : "Create NFT"}
         </button>
         {success && (
-<<<<<<< Updated upstream
           <p className="text-green-500 mt-4">NFT created successfully!</p>
         )}
         {isNFTCreated && (
@@ -199,17 +162,6 @@ function NFTHUBComponent() {
             >
               View on IPFS
             </a>
-=======
-          <>
-            <p className="text-green-500 mt-4">NFT created successfully!</p>
-            {transactionHash && (
-              <a
-                href={`https://explorer.celo.org/alfajores/tx/${transactionHash}`}
-              >
-                Look at the transaction!
-              </a>
-            )}
->>>>>>> Stashed changes
           </>
         )}
       </div>
