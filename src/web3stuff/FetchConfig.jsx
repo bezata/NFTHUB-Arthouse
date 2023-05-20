@@ -11,7 +11,9 @@ const wagmiClient = createClient({
   autoConnect: true,
   connectors: w3mConnectors({ projectId, version: 2, chains }),
   provider,
+  defaultChain: celoAlfajores,
 });
+setDefaultChain(celoAlfajores);
 
 function FetchConfig() {
   return (

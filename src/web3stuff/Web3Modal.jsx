@@ -22,6 +22,7 @@ const wagmiClient = createClient({
     CELO: "/abi/celogo.png",
   },
 });
+setDefaultChain(celoAlfajores);
 const ethereumClient = new EthereumClient(wagmiClient, chains);
 
 function ModalWallet() {
