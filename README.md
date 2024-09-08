@@ -20,7 +20,7 @@ Run `npm run dev` to start the development server.
 
 * Create and list NFTs on a exhibition
 * Upload NFT images to IPFS using Pinata API
-* Authenticate users using Wagmi protocol
+* Authenticate users using rainbowkit
 * View NFT details and minter information on showcase
 * Added hardhat integration and truffle dashboard support
 
